@@ -8,13 +8,13 @@ const fs = require('fs');
 const httpsPort = 443;
 const httpPort = 80;
 
-http.request({port: 80}, (res) => {
-	res.redirect('https://axonai.ai');
+app.use(express.static(path.join(__dirname, 'public')));
+
+app.get('*', (res) => {
+	res.redirect('https://axonai.ai/');
 });
 
-console.log('HTTP server started on port: ${httpPort}');
-
-app.use(express.static(path.join(__dirname, 'public')));
+app.listen(80);
 
 const certPath = '/etc/letsencrypt/live/axonai.ai/';
 const certKeyPath = certPath + 'privkey.pem';
@@ -25,8 +25,10 @@ const certificate = fs.readFileSync(certFilePath, 'utf8');
 
 const credentials = {key: privateKey, cert: certificate};
 const httpsServer = https.createServer(credentials, app);
+const httpServer = http.createServer(app);
 
-//httpServer.listen(8080);
+httpServer.listen(httpPort);
 httpsServer.listen(httpsPort);
 
+console.log(`Server started on port: ${httpPort}`);
 console.log(`Server started on port: ${httpsPort}`);
