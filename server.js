@@ -4,6 +4,6 @@ const path = require('path');
 
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.listen(8080, () => {
-	console.log('Server started on port 8080');
+app.listen(80, () => {
+	console.log('Server started on port 80');
 });
