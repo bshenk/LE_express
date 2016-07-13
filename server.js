@@ -4,6 +4,7 @@ const path = require('path');
 const https = require('https');
 const http = require('http');
 const fs = require('fs');
+const cors = require('cors');
 
 const httpsPort = 443;
 const httpPort = 80;
@@ -25,6 +26,7 @@ const certPath = '/etc/letsencrypt/live/axonai.ai/',
 	credentials = {key: privateKey, cert: certificate};
 
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(cors());
 
 const httpsServer = https.createServer(credentials, app);
 httpsServer.listen(httpsPort);
