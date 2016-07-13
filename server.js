@@ -8,26 +8,25 @@ const fs = require('fs');
 const httpsPort = 443;
 const httpPort = 80;
 
-// HTTP
-// Redirect from http port 80 to https
+// HTTP Server - Redirect from http port 80 to https
 http.createServer(function (req, res) {
     res.writeHead(301, { "Location": "https://" + req.headers['host'] + req.url });
     res.end();
-}).listen(80);
+}).listen(httpPort);
 
-// HTTPS
-const certPath = '/etc/letsencrypt/live/axonai.ai/';
-const certKeyPath = certPath + 'privkey.pem';
-const certFilePath = certPath + 'cert.pem';
+console.log(`HTTP server started on port: ${httpPort}`);
 
-const privateKey  = fs.readFileSync(certKeyPath, 'utf8');
-const certificate = fs.readFileSync(certFilePath, 'utf8');
-
-const credentials = {key: privateKey, cert: certificate};
+// HTTPS server
+const certPath = '/etc/letsencrypt/live/axonai.ai/',
+	certKeyPath = `${certPath}privkey.pem`,
+	certFilePath = `${certPath}cert.pem`,
+	privateKey  = fs.readFileSync(certKeyPath, 'utf8'),
+	certificate = fs.readFileSync(certFilePath, 'utf8'),
+	credentials = {key: privateKey, cert: certificate};
 
 app.use(express.static(path.join(__dirname, 'public')));
 
 const httpsServer = https.createServer(credentials, app);
 httpsServer.listen(httpsPort);
 
-console.log(`Server started on port: ${httpsPort}`);
+console.log(`HTTPS server started on port: ${httpsPort}`);
