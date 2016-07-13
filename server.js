@@ -1,8 +1,9 @@
 const express = require('express');
 const app = express();
+const path = require('path');
 
-app.get('/', function(req, res) {
-	res.send('hello world')
+app.use(express.static(path.join(__dirname, 'public')));
+
+app.listen(8080, () => {
+	console.log('Server started on port 8080');
 });
-
-app.listen(80);
