@@ -26,7 +26,7 @@ const certPath = '/etc/letsencrypt/live/axonai.ai/',
 	credentials = {key: privateKey, cert: certificate};
 
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(cors());
+app.use(cors({ origin: 'https://axonai.ai' }));
 
 const httpsServer = https.createServer(credentials, app);
 httpsServer.listen(httpsPort);
