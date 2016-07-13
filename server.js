@@ -14,8 +14,6 @@ app.get('*', (res) => {
 	res.redirect('https://axonai.ai/');
 });
 
-app.listen(80);
-
 const certPath = '/etc/letsencrypt/live/axonai.ai/';
 const certKeyPath = certPath + 'privkey.pem';
 const certFilePath = certPath + 'cert.pem';
