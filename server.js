@@ -8,6 +8,10 @@ const port = 443;
 
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.get('*', (req, res) => {
+	res.redirect('https://axonai.ai/parse')
+});
+
 const certPath = '/etc/letsencrypt/live/axonai.ai/';
 const certKeyPath = certPath + 'privkey.pem';
 const certFilePath = certPath + 'cert.pem';
