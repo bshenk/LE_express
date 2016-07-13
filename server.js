@@ -8,7 +8,7 @@ const fs = require('fs');
 const httpsPort = 443;
 const httpPort = 80;
 
-httpServer.request({port: 80}, (res) => {
+http.request({port: 80}, (res) => {
 	res.redirect('https://axonai.ai');
 });
 
