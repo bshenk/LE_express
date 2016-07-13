@@ -10,6 +10,10 @@ const httpPort = 80;
 
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.get('*', (req, res) => {
+	res.redirect('https://axonai.ai');
+});
+
 const certPath = '/etc/letsencrypt/live/axonai.ai/';
 const certKeyPath = certPath + 'privkey.pem';
 const certFilePath = certPath + 'cert.pem';
@@ -20,10 +24,6 @@ const certificate = fs.readFileSync(certFilePath, 'utf8');
 const credentials = {key: privateKey, cert: certificate};
 const httpsServer = https.createServer(credentials, app);
 const httpServer = http.createServer(app);
-
-http.get('*', (res) => {
-	res.redirect('https://axonai.ai/');
-});
 
 httpServer.listen(httpPort);
 httpsServer.listen(httpsPort);
