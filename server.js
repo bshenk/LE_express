@@ -12,11 +12,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 const httpServer = http.createServer(app);
 
-httpServer.get('*', res => {
+httpServer.request({port: 80}, (res) => {
 	res.redirect('https://axonai.ai');
 });
-
-httpServer.listen(httpPort);
 
 console.log('HTTP server started on port: ${httpPort}')
 
