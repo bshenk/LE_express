@@ -5,6 +5,7 @@ const https = require('https');
 const http = require('http');
 const fs = require('fs');
 const cors = require('cors');
+const subdomain = require('express-subdomain');
 
 const httpsPort = 443;
 const httpPort = 80;
@@ -27,6 +28,16 @@ const certPath = '/etc/letsencrypt/live/axonai.ai/',
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(cors({ origin: 'https://axonai.ai' }));
+
+// AXONPARSE subdomain
+const router = express.Router();
+
+router.get('/', (req, res) => {
+	res.send('WELCOME TO PARSE!!!!');
+});
+
+app.use(subdomain('parse', router));
+
 
 const httpsServer = https.createServer(credentials, app);
 httpsServer.listen(httpsPort);
